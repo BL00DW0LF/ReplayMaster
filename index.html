@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+
+  <title>Kaleb's .replay Maker Tool for SpyParty</title>
+  <meta name="description" content="Kaleb&#39;s .replay Maker Tool for SpyParty">
+  <meta name="author" content="Kaleb Fowler">
+
+  <link rel="stylesheet" href="ReplayMaster.css">
+
+</head>
+
+<body style="background-color:gray;">
+	<script src="ReplayMaster.js"></script>
+  
+	<div id="drop_zone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+		<h3>Drag a .replay file onto this page, within the blue outline.</h3>
+		<h4>Only works on current (v6 & v7 replays and v6 snipers) files for now.  This may destroy data, backup your replays!<br>
+		Multi-file works, in the order they're sorted in your folder, starting with the file you clicked and dragged (so drag via the first file if you're also changing file names).</h4><br>
+		Autofill overrides "Keep value on load."<br>
+		
+		<span id="SniperFileHideable" style="display:none"><h3>For .sniper files:</h3>
+		<label>.sniper version: <span id="SniperFileVersion">null</span></label><br>
+		<label>P2P Protocol version: <span id="SniperP2PProtocolVersion">null</span></label><br>
+		<label>Revno Version: <span id="SniperRevnoVersion">null</span></label><br>
+		<label>Changelist Version: <span id="SniperChangelistVersion">null</span></label><br>
+		<label>Game ID: <span id="SniperGameID">null</span></label><br>
+		<label>Instance ID: <span id="SniperInstanceID">null</span></label><br>
+		<label>Start Time: <span id="SniperStartTime">null</span></label> - 
+			<label>New Start Time: <input type="text" id="SniperStartTimeNew" oninput="displaySniperUnixTime()"></label> <label id="SniperUnixTimeDisplay"></label> <label><input type="checkbox" id="SniperStartTimeAutofill" checked="true">Autofill this field</label>  <label><input type="checkbox" id="SniperStartTimeKeep" checked="true">Keep value on load</label><br>
+		<label>Play ID: <span id="SniperPlayID">null</span></label><br>
+		<label>Flags [unint8]: <span id="SniperFlags">null</span></label><br>
+		<label>Sniper Username Length: <span id="SniperFileUsernameLength">null</span></label><br>
+		<label>Sniper Display Name Length: <span id="SniperFileDisplayNameLength">null</span></label><br>
+		<label>Client Latency: <span id="SniperClientLatency">null</span></label><br>
+		<label>First Shot Duration: <span id="SniperDuration">null</span> seconds</label><br>
+		<label>Total Duration: <span id="SniperTotalDuration">null</span> seconds</label><br>
+		<label>Packet Data Size: <span id="SniperPacketDataSize">null</span></label><br><br>
+		
+		<label>Result Data: </label><br>
+		<label>Result Data Flags Version: <span id="SniperResultFlagsVersion">null</span></label><br>
+		<label>Shot Spy eventually?: <span id="SniperFileShotSpy">null</span></label><br>
+		<label>Total Shots: <span id="SniperFileTotalShots">null</span></label><br>
+		<label>New Result: <span id="SniperFileNewResult">null</span></label><br>
+		<label>Achieved Missions: <span id="SniperFileAchievedMissions">null</span></label><br>
+		<br>
+		<label>Sniper Name: <span id="SniperFileName">null</span></label> - 
+			<label>New Name: <input type="text" id="SniperFileNameNew"></label>  <label><input type="checkbox" id="SniperFileNameAutofill" checked="true">Autofill this field</label>  <label><input type="checkbox" id="SniperFileNameKeep" checked="true">Keep value on load</label><br>
+		<label>Sniper Steam Name: <span id="SniperFileDisplayName">null</span></label> - 
+			<label>New Name: <input type="text" id="SniperFileDisplayNameNew"></label>  <label><input type="checkbox" id="SniperFileDisplayNameAutofill" checked="true">Autofill this field</label>  <label><input type="checkbox" id="SniperFileDisplayNameKeep" checked="true">Keep value on load</label><br>
+		</span>
+		
+		<span id="ReplayFileHideable"style="display:none"><h3>For replay files:</h3>
+		<label>Replay Version: <span id="ReplayFileVersion">null</span></label><br>
+		<label>P2P Protocol Version: <span id="P2PProtocolVersion">null</span></label><br>
+		<label>Revno Version: <span id="RevnoVersion">null</span></label><br>
+		<label>Changelist Version: <span id="ChangelistVersion">null</span></label><br>
+		<label>Flags [unint32]: <span id="Flags">null</span></label><br>	
+		<label>Duration: <span id="Duration">null</span> seconds</label> - 
+			<label>New Duration: <input type="number" id="DurationNew" oninput="updateTime(&#39;DurationNew&#39;)"></label>  <label id="DurationTimeDisplay"></label>  <label><input type="checkbox" id="DurationAutofill" checked="true">Autofill this field.</label>  <label><input type="checkbox" id="DurationKeep" checked="true">Keep value on load</label>  <b style="color:red">Adding this makes idle space at the end of the replay. Not tested well.</b><br>
+		<label>Game ID: <span id="GameID">null</span></label><br>
+		<label>Start Time: <span id="StartTime">null</span></label> - 
+			<label>New Start Time: <input type="text" id="StartTimeNew" oninput="displayUnixTime()"></label> <label id="UnixTimeDisplay"></label> <label><input type="checkbox" id="StartTimeAutofill" checked="true">Autofill this field</label>  <label><input type="checkbox" id="StartTimeKeep" checked="true">Keep value on load</label><br>
+		<label>Play ID: <span id="PlayID">null</span></label><br>
+		<label>Spy Username Length: <span id="SpyUsernameLength">null</span></label><br>
+		<label>Sniper Username Length: <span id="SniperUsernameLength">null</span></label><br>
+		<label>Spy Display Name Length: <span id="SpyDisplayNameLength">null</span></label><br>
+		<label>Sniper Display Name Length: <span id="SniperDisplayNameLength">null</span></label><br>
+		<label>Client Latency: <span id="ClientLatency">null</span></label><br>
+		<label>Packet Data Size: <span id="PacketDataSize">null</span></label><br><br>
+		
+		<label>Result Data: </label><br>
+		<label>Result Data Flags Version: <span id="ResultFlagsVersion">null</span></label><br>
+		<label>Simplified: <span id="Simplified">null</span></label><br>
+		<label>Handicapped: <span id="Handicapped">null</span></label><br>
+		<label>Result: <span id="Result">null</span></label> - <label>New Result: <select name="New Result" id="ResultNew">
+			<option value="0">Missions Win</option>
+			<option value="1">Spy Timeout</option>
+			<option value="2">Spy Shot</option>
+			<option value="3">Civilian Shot</option>
+			<option value="4">Result In Progress</option>
+			<option disabled="" selected="" value=""> -- select an option -- </option></select></label>  
+			<label><input type="checkbox" id="ResultAutofill" checked="true">Autofill this field.</label>  <label><input type="checkbox" id="ResultKeep" checked="true">Keep value on load</label> <b style="color:red">WARNING: This breaks Replay Sniper Set mode.  I recommend never changing this.</b><br>
+		<label>Game Type: <span id="GameType">null</span></label><br>
+		<label>Venue Hash [unint32]: <span id="VenueHash">null</span></label><br>
+		<label>Venue Variant: <span id="VenueVariant">null</span></label><br>
+		<label>Selected Missions: <span id="SelectedMissions">null</span></label><br>
+		<label>Enabled Missions: <span id="EnabledMissions">null</span></label><br>
+		<label>Finshed Missions: <span id="FinishedMissions">null</span></label><br>
+		<label>Number of Guests: <span id="NumGuests">null</span></label><br>
+		<label>Clock Time: <span id="StartDurationSeconds">null</span> seconds</label> <span id="DurationDisplay">(null)</span><br>
+		
+		<br>
+		<label>Spy Name: <span id="SpyName">null</span></label> - 
+			<label>New Name: <input type="text" id="SpyNameNew"></label>  <label><input type="checkbox" id="SpyNameAutofill" checked="true">Autofill this field</label>  <label><input type="checkbox" id="SpyNameKeep" checked="true">Keep value on load</label> &nbsp; <b style="color:red">Expected limits: 32 characters (for all?)</b><br>
+		<label>Sniper Name: <span id="SniperName">null</span></label> - 
+			<label>New Name: <input type="text" id="SniperNameNew"></label>  <label><input type="checkbox" id="SniperNameAutofill" checked="true">Autofill this field</label>  <label><input type="checkbox" id="SniperNameKeep" checked="true">Keep value on load</label><br>
+		<label>Spy Steam Name: <span id="SpyDisplayName">null</span></label> - 
+			<label>New Name: <input type="text" id="SpyDisplayNameNew"></label>  <label><input type="checkbox" id="SpyDisplayNameAutofill" checked="true">Autofill this field</label>  <label><input type="checkbox" id="SpyDisplayNameKeep" checked="true">Keep value on load</label><br>
+		<label>Sniper Steam Name: <span id="SniperDisplayName">null</span></label> - 
+			<label>New Name: <input type="text" id="SniperDisplayNameNew"></label>  <label><input type="checkbox" id="SniperDisplayNameAutofill" checked="true">Autofill this field</label>  <label><input type="checkbox" id="SniperDisplayNameKeep" checked="true">Keep value on load</label><br>
+		</span>
+		
+		
+		
+		<br><br>
+		<label><input type="checkbox" id="nameBulk" checked="false">Bulk Mode for names</label><br>
+		Bulk mode is for altering the names of several replays in a row, keeping the same names for their respective players.  Enabling it overrides Autofill and Keep Value for those fields.  Blank original names are not saved to pairs.
+		
+		<br><br>
+		<button onclick="wipeDataDisplayManual()">Wipe Browser Fields</button><br><br>
+		<button onclick="saveToFile()">Save Changes to File</button>
+		
+		
+		
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	</div>
+  
+  
+  
+
+</body></html>
