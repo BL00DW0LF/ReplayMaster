@@ -2,11 +2,11 @@
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
 
-  <title>Kaleb's .replay Maker Tool for SpyParty</title>
-  <meta name="description" content="Kaleb&#39;s .replay Maker Tool for SpyParty">
-  <meta name="author" content="Kaleb Fowler">
-
-  <link rel="stylesheet" href="ReplayMaster.css">
+	<title>Kaleb's .replay Maker Tool for SpyParty</title>
+	<meta name="description" content="Kaleb's .replay Maker Tool for SpyParty">
+	<meta name="author" content="Kaleb Fowler">
+	<link rel="icon" type="image/x-icon" href="../favicon.png">
+	<link rel="stylesheet" href="ReplayMaster.css">
 
 </head>
 
@@ -57,7 +57,7 @@
 		<label>Changelist Version: <span id="ChangelistVersion">null</span></label><br>
 		<label>Flags [unint32]: <span id="Flags">null</span></label><br>	
 		<label>Duration: <span id="Duration">null</span> seconds</label> - 
-			<label>New Duration: <input type="number" id="DurationNew" oninput="updateTime(&#39;DurationNew&#39;)"></label>  <label id="DurationTimeDisplay"></label>  <label><input type="checkbox" id="DurationAutofill" checked="true">Autofill this field.</label>  <label><input type="checkbox" id="DurationKeep" checked="true">Keep value on load</label>  <b style="color:red">Adding this makes idle space at the end of the replay. Not tested well.</b><br>
+			<label>New Duration: <input type="number" id="DurationNew" oninput="updateTime('DurationNew')"></label>  <label id="DurationTimeDisplay"></label>  <label><input type="checkbox" id="DurationAutofill" checked="true">Autofill this field.</label>  <label><input type="checkbox" id="DurationKeep" checked="true">Keep value on load</label>  <b style="color:red">Adding this makes idle space at the end of the replay. Not tested well.</b><br>
 		<label>Game ID: <span id="GameID">null</span></label><br>
 		<label>Start Time: <span id="StartTime">null</span></label> - 
 			<label>New Start Time: <input type="text" id="StartTimeNew" oninput="displayUnixTime()"></label> <label id="UnixTimeDisplay"></label> <label><input type="checkbox" id="StartTimeAutofill" checked="true">Autofill this field</label>  <label><input type="checkbox" id="StartTimeKeep" checked="true">Keep value on load</label><br>
